@@ -103,6 +103,16 @@
             text-align: center;
         }
 
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #c33;
+            display: none;
+        }
+
         @media (max-width: 480px) {
             .login-form {
                 padding: 1.5rem;
@@ -121,7 +131,11 @@
             <p class="subtitle">Sistema de Gestão e Centralização de Dados</p>
         </header>
 
-        <form class="login-form" action="dashboard.html" method="post">
+        <form class="login-form" id="loginForm" onsubmit="return autenticar(event)">
+            <div class="error-message" id="errorMsg">
+                Usuário ou senha inválidos. Tente novamente.
+            </div>
+
             <div class="form-group">
                 <label for="usuario">Usuário Institucional</label>
                 <input type="text" id="usuario" name="usuario" required>
@@ -141,5 +155,26 @@
             <p class="env-info">Escopo: 2026.2</p>
         </footer>
     </main>
+
+    <script>
+        function autenticar(event) {
+            event.preventDefault(); // Impede o envio POST
+            
+            const usuario = document.getElementById('usuario').value.trim();
+            const senha = document.getElementById('senha').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            // Validação básica (ajuste conforme sua necessidade)
+            if (usuario.length > 0 && senha.length > 0) {
+                // Redireciona para o dashboard
+                window.location.href = 'dashboard.html';
+                return false;
+            } else {
+                errorMsg.style.display = 'block';
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
+   
